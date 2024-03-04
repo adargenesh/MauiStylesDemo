@@ -9,6 +9,46 @@ namespace MauiStylesDemo.ViewModels
 {
     public class FormValidationViewModel:ViewModelBase
     {
+        private bool showDateError;
+
+        public bool ShowDateError
+        {
+            get => showDateError;
+            set
+            {
+                showDateError = value;
+                OnPropertyChanged("ShowDateError");
+            }
+        }
+
+        private DateTime date;
+
+        public DateTime Date
+        {
+            get => date;
+            set
+            {
+                date = value;
+                ValidateName();
+                OnPropertyChanged("Date");
+            }
+        }
+
+        private string dateError;
+
+        public string DateError
+        {
+            get => dateError;
+            set
+            {
+                dateError = value;
+                OnPropertyChanged("DateError");
+            }
+        }
+        private void ValidateDate()
+        {
+            this.ShowDateError = !Date.HasValue || Date.Year <= 2011;
+        }
         #region שם
         private bool showNameError;
 
