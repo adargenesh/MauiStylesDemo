@@ -1,4 +1,5 @@
-﻿using MauiStylesDemo;
+﻿
+using MauiStylesDemo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace MauiStylesDemo.ViewModels
             set
             {
                 date = value;
-                ValidateName();
+                ValidateDate();
                 OnPropertyChanged("Date");
             }
         }
@@ -47,7 +48,16 @@ namespace MauiStylesDemo.ViewModels
         }
         private void ValidateDate()
         {
-            this.ShowDateError = !Date.HasValue || Date.Year <= 2011;
+            double age = CalculaterAge();
+            this.showDateError = age <= 13;
+        }
+        private double CalculaterAge()
+        {
+            DateTime currentDate = DateTime.Now;
+            TimeSpan d = currentDate - date;
+            double ageInYears = d.TotalDays / 365.25;
+            return ageInYears;
+
         }
         #region שם
         private bool showNameError;
@@ -135,6 +145,7 @@ namespace MauiStylesDemo.ViewModels
             this.ShowAgeError = !Age.HasValue || Age <= 13;
         }
         #endregion
+       
 
         public FormValidationViewModel()
         {
@@ -143,6 +154,7 @@ namespace MauiStylesDemo.ViewModels
             this.AgeError = "הגיל חייב להיות גדול מ 13";
             this.ShowAgeError = false;
             this.SaveDataCommand = new Command(() => SaveData());
+            this.showDateError = false;
         }
 
         //This function validate the entire form upon submit!
